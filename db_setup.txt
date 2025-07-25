@@ -1,0 +1,81 @@
+/* add this first
+enter this to phpmyadmin sql cmd
+*/
+
+CREATE DATABASE user_registration;
+
+USE user_registration;
+
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(100) NOT NULL,
+    last_name VARCHAR(100) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    username VARCHAR(100) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    role ENUM('admin', 'retailer', 'customer') NOT NULL,
+    address TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE orders (
+    order_id INT AUTO_INCREMENT PRIMARY KEY,
+    customer_email VARCHAR(255) NOT NULL,
+    product_name VARCHAR(255) NOT NULL,
+    quantity INT NOT NULL,
+    total_price DECIMAL(10, 2) NOT NULL,
+    order_date DATE NOT NULL,
+    order_status ENUM('Pending', 'Unshipped', 'Shipped', 'Delivered') DEFAULT 'Pending',
+    payment_status ENUM('Pending', 'Paid', 'Unpaid', 'Refunded') DEFAULT 'Pending',
+    shipping_date DATE,
+    tracking_number VARCHAR(100),
+    payment_method VARCHAR(50),
+    Order_Address TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE payment_summary (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    balance DECIMAL(10, 2) NOT NULL
+);
+
+CREATE TABLE sales (
+    sales_id INT AUTO_INCREMENT PRIMARY KEY,
+    sales_date DATE NOT NULL,
+    total_price DECIMAL(10, 2) NOT NULL
+);
+
+CREATE TABLE expenses (
+    expense_id INT AUTO_INCREMENT PRIMARY KEY,
+    amount DECIMAL(10, 2) NOT NULL,
+    description TEXT,
+    expense_date DATE NOT NULL
+);
+
+CREATE TABLE inventory (
+    inventory_id INT AUTO_INCREMENT PRIMARY KEY,
+    product_name VARCHAR(255) NOT NULL,
+    quantity INT NOT NULL,
+    unit_price DECIMAL(10, 2) NOT NULL
+);
+
+CREATE TABLE cart (
+    cart_id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(255) NOT NULL,
+    inventory_id INT NOT NULL,
+    quantity INT NOT NULL DEFAULT 1,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_email (email),
+    INDEX idx_inventory (inventory_id)
+);
+
+
+/* then add this
+enter this to phpmyadmin sql cmd
+*/
+USE user_registration;
+
+ALTER TABLE inventory ADD COLUMN product_desc TEXT AFTER product_name;
+ALTER TABLE inventory ADD COLUMN image_path VARCHAR(255) AFTER product_desc;
+ALTER TABLE inventory ADD COLUMN category VARCHAR(100) AFTER image_path;
+ALTER TABLE sales ADD COLUMN fulfilled_by VARCHAR(100) DEFAULT NULL;
