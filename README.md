@@ -5,6 +5,6 @@ Follow the guide on how to setup and use the system.
 Kindly download the User's Manual and Technical Manual.
 See inside 'db_setup.txt' on how to create the dataabase.
 
-If you have any concerns or experiencing any trouble, you may reach our IT tech support via email: alezandromapalad@gmail.com
+If you have any concerns or are experiencing any issues, you may contact our IT support/developer via email at: alezandromapalad@gmail.com.
 
 
